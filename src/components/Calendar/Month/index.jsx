@@ -1,9 +1,10 @@
 import React from 'react';
 import Week from '../Week';
-import { getWeek, getWeeksInMonth } from 'date-fns';
+import { getWeek, getWeeksInMonth, format } from 'date-fns';
 
 function Month(props) {
   const { year, month } = props;
+  const currentDate = new Date();
 
   const getWeeks = () => {
     const date = new Date(year, month, 1);
@@ -18,6 +19,16 @@ function Month(props) {
 
   return (
     <table>
+      <caption>{`${format(currentDate, 'MMMM')} ${currentDate.getFullYear()}`}</caption>
+      <tr>
+        <th>S</th>
+        <th>M</th>
+        <th>T</th>
+        <th>W</th>
+        <th>T</th>
+        <th>F</th>
+        <th>S</th>
+      </tr>
       <tbody>{getWeeks()}</tbody>
     </table>
   );
