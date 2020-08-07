@@ -15,13 +15,25 @@ class Calendar extends Component {
   render() {
     const { currentDate } = this.state;
     return (
-      <section>
-        <div>
-          <span>{format(currentDate, "eeee")}</span>
-          <span>{format(currentDate, "d")}</span>
-        </div>
-        <Month year={getYear(currentDate)} month={getMonth(currentDate)} />
-      </section>
+      <article className={styles.container}>
+        <section className={styles.calendarWidget}>
+          <div className={styles.today}>
+            <span className={styles.currentWeekday}>
+              {format(currentDate, "eeee")}
+            </span>
+            <span className={styles.currentDay}>
+              {format(currentDate, "d")}
+            </span>
+          </div>
+          <div className={styles.calendar}>
+            <Month
+              currentDate={currentDate}
+              year={getYear(currentDate)}
+              month={getMonth(currentDate)}
+            />
+          </div>
+        </section>
+      </article>
     );
   }
 }

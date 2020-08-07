@@ -1,0 +1,17 @@
+.day {
+  font-size: 0.7em;
+  height: 45px;
+  width: 45px;
+  font-weight: 700;
+  color: #b7b7b7;
+}
+
+.anotherMonthDay {
+  color: transparent;
+}
+
+.selectedDay {
+  color: #eb1b57;
+  border: 5px solid #eb1b57;
+  border-radius: 50%;
+}
