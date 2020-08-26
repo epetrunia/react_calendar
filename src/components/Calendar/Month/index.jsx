@@ -1,35 +1,29 @@
-import React from "react";
-import Week from "../Week";
-import styles from "./Month.module.scss";
-import { getWeek, getWeeksInMonth, format } from "date-fns";
+import React from 'react';
+import Week from './Week';
+import styles from './Month.module.scss';
+import PropTypes from 'prop-types';
+import { startOfMonth, endOfMonth, format, eachWeekOfInterval } from 'date-fns';
 
 function Month(props) {
-  const { year, month, currentDate } = props;
-
-  const getWeeks = () => {
-    const date = new Date(year, month, 1);
-    const firstWeek = getWeek(date);
-    const numberOfWeeks = getWeeksInMonth(date);
-    const weeks = [];
-    for (let i = firstWeek; i < firstWeek + numberOfWeeks; i++) {
-      weeks.push(
-        <Week
-          key={`${year}-${i}`}
-          currentDate={currentDate}
-          year={year}
-          month={month}
-          week={i}
-        />
-      );
-    }
-    return weeks;
+  const getWeeks = ({ date, currentDate }) => {
+    return eachWeekOfInterval({
+      start: startOfMonth(date),
+      end: endOfMonth(date),
+    }).map((sunday) => (
+      <Week
+        key={sunday}
+        sunday={sunday}
+        currentDate={currentDate}
+        date={date}
+      />
+    ));
   };
-
+  const { currentDate } = props;
   return (
     <table>
       <caption className={styles.monthName}>{`${format(
         currentDate,
-        "MMMM y"
+        'MMMM y'
       )}`}</caption>
       <tbody>
         <tr className={styles.weekday}>
@@ -41,10 +35,19 @@ function Month(props) {
           <th>F</th>
           <th>S</th>
         </tr>
-        {getWeeks()}
+        {getWeeks(props)}
       </tbody>
     </table>
   );
 }
+
+Month.propTypes = {
+  currentDate: PropTypes.instanceOf(Date),
+  date: PropTypes.instanceOf(Date),
+};
+
+Month.defaultProps = {
+  currentDate: new Date(),
+};
 
 export default Month;
